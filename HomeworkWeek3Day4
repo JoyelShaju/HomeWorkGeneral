@@ -1,0 +1,64 @@
+import pyodbc
+
+class Region:
+    def __init__(self, region_id, region_desc):
+        self.region_id = region_id
+        self.region_description = region_desc
+
+class Suppliers:
+    def __init__(self, comp_name, cont_name, cont_title, address, city, region, post_code, country, phone, fax, home_page):
+        self.company_name = comp_name
+        self.contact_name = cont_name
+        self.contact_title = cont_title
+        self.address = address
+        self.city = city
+        self.region = region
+        self.post_code = post_code
+        self.country = country
+        self.phone = phone
+        self.fax = fax
+        self.home_page = home_page
+
+class Connection:
+    def __init__(self, server, database_name, user_name, password):
+
+        server = "localhost,1433"
+        database_name = "NorthWind"
+        user_name = "sa"
+        password = "Passw0rd2018"
+        self.docker_Northwind = pyodbc.connect('DRIVER={ODBC DRIVER 17 for SQL SERVER};'
+                                            'SERVER=' + server + ';'
+                                            'DATABASE=' + database_name + ';'
+                                            'UID=' + user_name + ';'
+                                            'PWD=' + password)
+        self.cursor = self.docker_Northwind.cursor()
+
+    def start_connection(self):
+        return self.cursor
+
+
+class ReadOperation:
+    def __init__(self, sql):
+        self.ops = sql
+
+class Program_Main:
+    def __init__(self):
+        self.result = ""
+
+    def run(self):
+        connection = Connection("localhost,1433", "Northwind", "sa", "Passw0rd2018")
+        cursor = connection.start_connection()
+        result = cursor.execute("SELECT * FROM REGION")
+        for row in result:
+            print(row)
+
+            return""
+
+    def crud_operation(self):
+        # need an object representing the table
+        # I need the sql statement to run
+        # I need the connection object to send query tp the database
+        result = ""
+
+main_prog = Program_Main()
+main_prog.run()
