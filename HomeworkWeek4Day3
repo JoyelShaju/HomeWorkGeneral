@@ -1,0 +1,13 @@
+import json
+
+def read_operation(self):
+    query = "SELECT * FROM Categories"
+    cursor = self.cursor.execute(query)
+    columns = [column[0] for column in cursor.description]
+    print(columns)
+    items = []
+    for row in cursor.fetchall():
+        items.append(dict(zip(columns, row)))
+    print(items)
+    with open("homework_week4.json", "w") as json_file:
+        json.dump(items, json_file, indent=1)
